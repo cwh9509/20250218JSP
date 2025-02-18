@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,14 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-String URL = "jdbc:mysql://localhost:3309/spring5fs";
-Class.forName("com.mysql.cj.jdbc.Driver");
-out.println("드라이버 로딩~<br>");
-try(Connection conn = DriverManager.getConnection(URL,"root","1234");)
-{out.println("mysql 접속 성공~");}catch(Exception e){
-   e.printStackTrace();
-}
-%>
+	<%
+	String URL = "jdbc:mysql://localhost:3309/spring5fs";
+	String sql = "select * from dept";
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	try (Connection conn = DriverManager.getConnection(URL, "root", "1234"); 
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+		)
+	{
+		out.println("<table border ='1'>");
+		out.println("<tr><th>deptno</th><th>dname</th><th>loc</th></tr>");
+		while(rs.next()){
+			out.println("<tr>");
+			out.println("<td>" + rs.getString("deptno") + "</td>");
+			out.println("<td>" + rs.getString("dname") + "</td>");
+			out.println("<td>" + rs.getString("loc") + "</td>");
+			out.println("</tr>");
+		}
+		out.println("</table>");
+	
+	} catch (Exception e) { e.printStackTrace(); }
+	%>
 </body>
 </html>

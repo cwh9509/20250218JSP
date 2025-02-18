@@ -18,7 +18,7 @@ try(Connection conn = DriverManager.getConnection(URL,"root","1234");
 	ResultSet rs = stmt.executeQuery(sql);)
 	{
 	while(rs.next()){
-		out.println(rs.getString("loc"));
+		out.println(rs.getString(1));
 	}
 }catch(Exception e){ e.printStackTrace(); }
 %>
