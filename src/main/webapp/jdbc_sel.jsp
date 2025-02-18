@@ -10,12 +10,17 @@
 <body>
 <%
 String URL = "jdbc:mysql://localhost:3309/spring5fs";
+String sql = "select * from dept";
 Class.forName("com.mysql.cj.jdbc.Driver");
 out.println("드라이버 로딩~<br>");
-try(Connection conn = DriverManager.getConnection(URL,"root","1234");)
-{out.println("mysql 접속 성공~");}catch(Exception e){
-   e.printStackTrace();
-}
+try(Connection conn = DriverManager.getConnection(URL,"root","1234");
+	Statement stmt = conn.createStatement();
+	ResultSet rs = stmt.executeQuery(sql);)
+	{
+	while(rs.next()){
+		out.println(rs.getString("loc"));
+	}
+}catch(Exception e){ e.printStackTrace(); }
 %>
 </body>
 </html>
